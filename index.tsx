@@ -68,7 +68,7 @@ const MoneyInput = forwardRef<Handles, MoneyInputProps>(
             setLabel(formatMoney(value, locale));
         } else if(value == null && value != rawValue) {
             setValue(null);
-            setLabel(null);
+            setLabel('');
         }
     }, [value, rawValue])
 
