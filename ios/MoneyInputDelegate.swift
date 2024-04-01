@@ -181,6 +181,7 @@ class MoneyMask {
         currencyFormatter.usesGroupingSeparator = true
         currencyFormatter.numberStyle = .decimal
         currencyFormatter.maximumFractionDigits = 2
+        currencyFormatter.minimumFractionDigits = 2
         currencyFormatter.locale = Locale(identifier: locale)
         return currencyFormatter
     }
