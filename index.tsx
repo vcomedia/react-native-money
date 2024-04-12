@@ -66,10 +66,11 @@ const MoneyInput = forwardRef<Handles, MoneyInputProps>(
         if (value != null && value != rawValue) {
             setValue(value)
             setLabel(formatMoney(value, locale));
-        } else if(value == null && value != rawValue) {
-            setValue(undefined);
-            setLabel('');
-        }
+        } 
+        // else if(value == null && value != rawValue) {
+        //     setValue(undefined);
+        //     setLabel('');
+        // }
     }, [value, rawValue])
 
     // Convert TextInput to MoneyInput native type
