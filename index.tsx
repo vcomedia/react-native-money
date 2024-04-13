@@ -63,10 +63,20 @@ const MoneyInput = forwardRef<Handles, MoneyInputProps>(
 
     // Keep numeric prop in sync with out state
     useEffect(() => {
-        if (value != null && value != rawValue) {
-            setValue(value)
-            setLabel(formatMoney(value, locale));
-        } 
+        // if (value != null && value != rawValue) {
+        //     setValue(value)
+        //     setLabel(formatMoney(value, locale));
+        // } 
+
+      if(value != rawValue) {
+        setValue(value)
+      }
+
+      if(value != null) {
+        setLabel(formatMoney(value, locale));
+      } else {
+        setLabel('');
+      }
         // else if(value == null && value != rawValue) {
         //     setValue(undefined);
         //     setLabel('');
