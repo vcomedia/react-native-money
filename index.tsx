@@ -94,14 +94,6 @@ const MoneyInput = forwardRef<Handles, MoneyInputProps>(
         {...rest}
         ref={input}
         value={label}
-{/*         onFocus={e => {
-          if (defaultLabel == "" && !rawValue) {
-            setValue(0)
-            setLabel(formatMoney(0, locale));
-          }
-
-          onFocus?.(e)
-        }} */}
         onChangeText={async label => {
           const computedValue = extractValue(label, locale)
           setLabel(label)
