@@ -10,11 +10,18 @@ class TextInputMask: NSObject, RCTBridgeModule, MoneyInputListener {
         true
     }
 
+    // Change from implicitly unwrapped to optional
+    var bridge: RCTBridge?
+
     var methodQueue: DispatchQueue {
-        bridge.uiManager.methodQueue
+        if let queue = bridge?.uiManager.methodQueue {
+            return queue
+        } else {
+            // Fallback to main queue or other appropriate default
+            return DispatchQueue.main
+        }
     }
 
-    var bridge: RCTBridge!
     var masks: [String: MoneyInputDelegate] = [:]
     var listeners: [String: MoneyInputListener] = [:]
     
@@ -31,14 +38,14 @@ class TextInputMask: NSObject, RCTBridgeModule, MoneyInputListener {
     
     @objc(initializeMoneyInput:options:)
     func initializeMoneyInput(reactNode: NSNumber, options: NSDictionary) {
-        bridge.uiManager.addUIBlock { (uiManager, viewRegistry) in
+        bridge?.uiManager.addUIBlock { (uiManager, viewRegistry) in
             DispatchQueue.main.async {
                 guard let view = viewRegistry?[reactNode] as? RCTBaseTextInputView else { return }
-                let textView = view.backedTextInputView as! RCTUITextField
+                guard let textView = view.backedTextInputView as? RCTUITextField else { return }
             
                 let locale = options["locale"] as? String
                 let maskedDelegate = MoneyInputDelegate(localeIdentifier: locale) { (_, value) in
-                    let textField = textView as! UITextField
+                    guard let textField = textView as? UITextField else { return }
                     view.onChange?([
                         "text": value,
                         "target": view.reactTag,
